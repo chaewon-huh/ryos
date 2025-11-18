@@ -1057,11 +1057,6 @@ export function useFileSystem(
               initialData: { path: file.path, content: contentAsString ?? "" },
             });
           }
-        } else if (file.path.startsWith("/Images/")) {
-          // Pass the Blob object itself to Paint via initialData
-          launchApp("paint", {
-            initialData: { path: file.path, content: contentToUse },
-          }); // Pass contentToUse (Blob)
         } else if (
           file.path.startsWith("/Applets/") &&
           (file.path.endsWith(".app") || file.path.endsWith(".html"))

@@ -29,7 +29,6 @@ export interface BaseApp<TInitialData = unknown> {
     | "control-panels"
     | "minesweeper"
     | "finder"
-    | "paint"
     | "videos"
     | "photo-booth"
     | "ipod"
@@ -92,11 +91,6 @@ export interface IpodInitialData {
   videoId?: string;
 }
 
-export interface PaintInitialData {
-  path?: string;
-  content?: Blob;
-}
-
 export interface VideosInitialData {
   videoId?: string;
 }
@@ -110,7 +104,6 @@ export type AnyApp =
   | BaseApp<ControlPanelsInitialData>
   | BaseApp<InternetExplorerInitialData>
   | BaseApp<IpodInitialData>
-  | BaseApp<PaintInitialData>
   | BaseApp<VideosInitialData>
   | BaseApp<AppletViewerInitialData>
   | BaseApp<unknown>; // For apps without specific initialData
@@ -120,7 +113,6 @@ export type AnyInitialData =
   | ControlPanelsInitialData
   | InternetExplorerInitialData
   | IpodInitialData
-  | PaintInitialData
   | VideosInitialData
   | FinderInitialData
   | AppletViewerInitialData

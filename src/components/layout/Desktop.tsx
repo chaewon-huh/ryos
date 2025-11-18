@@ -69,7 +69,6 @@ export function Desktop({
     "textedit",
     "photo-booth",
     "videos",
-    "paint",
     "minesweeper",
     "terminal",
   ];
@@ -176,10 +175,6 @@ export function Desktop({
         } else if (targetFile.path.startsWith("/Documents/")) {
           launchApp("textedit", {
             initialData: { path: targetFile.path, content: contentAsString ?? "" },
-          });
-        } else if (targetFile.path.startsWith("/Images/")) {
-          launchApp("paint", {
-            initialData: { path: targetFile.path, content: contentToUse },
           });
         } else if (
           targetFile.path.startsWith("/Applets/") &&
@@ -500,7 +495,6 @@ export function Desktop({
       "textedit",
       "photo-booth",
       "videos",
-      "paint",
       "minesweeper",
       "terminal",
     ];

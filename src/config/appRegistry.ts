@@ -4,7 +4,6 @@ import { ChatsApp } from "@/apps/chats";
 import ControlPanelsApp from "@/apps/control-panels";
 import { MinesweeperApp } from "@/apps/minesweeper";
 import { FinderApp } from "@/apps/finder";
-import { PaintApp } from "@/apps/paint";
 import { VideosApp } from "@/apps/videos";
 import { PhotoBoothApp } from "@/apps/photo-booth";
 import { IpodApp } from "@/apps/ipod";
@@ -16,7 +15,6 @@ import type {
   ControlPanelsInitialData,
   InternetExplorerInitialData,
   IpodInitialData,
-  PaintInitialData,
   VideosInitialData,
 } from "@/apps/base/types";
 import type { AppletViewerInitialData } from "@/apps/applet-viewer";
@@ -69,14 +67,6 @@ export const appRegistry = {
     windowConfig: {
       defaultSize: { width: 430, height: 475 },
       minSize: { width: 430, height: 200 },
-    } as WindowConstraints,
-  },
-  [PaintApp.id]: {
-    ...(PaintApp as BaseApp<PaintInitialData>),
-    windowConfig: {
-      defaultSize: { width: 713, height: 480 },
-      minSize: { width: 400, height: 400 },
-      maxSize: { width: 713, height: 535 },
     } as WindowConstraints,
   },
   [PhotoBoothApp.id]: {

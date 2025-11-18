@@ -167,7 +167,6 @@
     { "source": "/finder", "destination": "/" },
     { "source": "/chats", "destination": "/" },
     { "source": "/textedit", "destination": "/" },
-    { "source": "/paint", "destination": "/" },
     { "source": "/photo-booth", "destination": "/" },
     { "source": "/minesweeper", "destination": "/" },
     { "source": "/videos", "destination": "/" },

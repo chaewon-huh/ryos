@@ -3,7 +3,6 @@ export const appIds = [
   "internet-explorer",
   "chats",
   "textedit",
-  "paint",
   "photo-booth",
   "minesweeper",
   "videos",
