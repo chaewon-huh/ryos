@@ -227,7 +227,7 @@ export function AppManager({ apps }: AppManagerProps) {
           window.history.replaceState({}, "", "/"); // Clean URL
         }
       } else if (path.startsWith("/") && path.length > 1) {
-        // Handle direct app launch path (e.g., /soundboard)
+        // Handle direct app launch path (e.g., /videos)
         const potentialAppId = path.substring(1) as AppId;
 
         // Check if it's a valid app ID from the registry

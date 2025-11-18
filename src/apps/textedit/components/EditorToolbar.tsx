@@ -13,12 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AudioInputButton } from "@/components/ui/audio-input-button";
-import { PlaybackBars } from "@/components/ui/playback-bars";
 import {
   ChevronDown,
-  Volume2,
-  Loader2,
   Bold as BoldIcon,
   Italic as ItalicIcon,
   Underline as UnderlineIcon,
@@ -33,26 +29,9 @@ import { useSound, Sounds } from "@/hooks/useSound";
 interface EditorToolbarProps {
   editor: Editor | null;
   currentTheme: string;
-  speechEnabled: boolean;
-  isTranscribing: boolean;
-  isTtsLoading: boolean;
-  isSpeaking: boolean;
-  onTranscriptionComplete: (text: string) => void;
-  onTranscriptionStart: () => void;
-  onSpeak: () => void;
 }
 
-export function EditorToolbar({
-  editor,
-  currentTheme,
-  speechEnabled,
-  isTranscribing,
-  isTtsLoading,
-  isSpeaking,
-  onTranscriptionComplete,
-  onTranscriptionStart,
-  onSpeak,
-}: EditorToolbarProps) {
+export function EditorToolbar({ editor, currentTheme }: EditorToolbarProps) {
   const { play: playButtonClick } = useSound(Sounds.BUTTON_CLICK);
   const isXpTheme = currentTheme === "xp" || currentTheme === "win98";
   const isLegacyToolbarTheme = isXpTheme || currentTheme === "system7";
@@ -273,37 +252,6 @@ export function EditorToolbar({
             </button>
           </div>
 
-          {/* Divider */}
-          <div className="w-[1px] h-[22px] bg-[#808080] shadow-[1px_0_0_#ffffff]" />
-
-          {/* Voice transcription & speech */}
-          <div className="flex">
-            <AudioInputButton
-              onTranscriptionComplete={onTranscriptionComplete}
-              onTranscriptionStart={onTranscriptionStart}
-              isLoading={isTranscribing}
-              className="w-[26px] h-[22px] flex items-center justify-center"
-              silenceThreshold={10000}
-            />
-            {speechEnabled && (
-              <button
-                onClick={() => {
-                  playButtonClick();
-                  onSpeak();
-                }}
-                className="w-[26px] h-[22px] flex items-center justify-center"
-                aria-label={isSpeaking ? "Stop speech" : "Speak"}
-              >
-                {isTtsLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : isSpeaking ? (
-                  <PlaybackBars color="black" />
-                ) : (
-                  <Volume2 className="h-4 w-4" />
-                )}
-              </button>
-            )}
-          </div>
         </div>
       </div>
     );
@@ -523,33 +471,6 @@ export function EditorToolbar({
         </Button>
       </div>
 
-      {/* Voice transcription & speech */}
-      <div className="flex items-center gap-1">
-        <AudioInputButton
-          onTranscriptionComplete={onTranscriptionComplete}
-          onTranscriptionStart={onTranscriptionStart}
-          isLoading={isTranscribing}
-          className="h-7 w-7 inline-flex items-center justify-center text-neutral-500 hover:text-black"
-          silenceThreshold={10000}
-        />
-        {speechEnabled && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7"
-            onClick={onSpeak}
-            aria-label={isSpeaking ? "Stop speech" : "Speak"}
-          >
-            {isTtsLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin text-black" />
-            ) : isSpeaking ? (
-              <PlaybackBars color="black" />
-            ) : (
-              <Volume2 className="h-4 w-4 text-neutral-500" />
-            )}
-          </Button>
-        )}
-      </div>
     </div>
   );
 }

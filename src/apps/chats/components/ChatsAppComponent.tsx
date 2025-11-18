@@ -66,7 +66,6 @@ export function ChatsAppComponent({
     error,
     stop,
     isSpeaking,
-    handleDirectMessageSubmit,
     handleNudge,
     handleSaveTranscript,
     isClearDialogOpen,
@@ -265,17 +264,6 @@ export function ChatsAppComponent({
       handleRyoMention,
       detectAndProcessMention,
     ]
-  );
-
-  const handleDirectSubmit = useCallback(
-    (message: string) => {
-      if (currentRoomId && username) {
-        sendRoomMessage(message);
-      } else {
-        handleDirectMessageSubmit(message);
-      }
-    },
-    [currentRoomId, username, sendRoomMessage, handleDirectMessageSubmit]
   );
 
   const handleNudgeClick = useCallback(() => {
@@ -813,7 +801,6 @@ export function ChatsAppComponent({
                           onSubmit={handleSubmit}
                           onStop={handleStop}
                           isSpeechPlaying={isSpeaking}
-                          onDirectMessageSubmit={handleDirectSubmit}
                           onNudge={handleNudgeClick}
                           previousMessages={prevMessagesContent}
                           showNudgeButton={!currentRoomId}

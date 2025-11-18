@@ -23,7 +23,6 @@ export interface AppProps<TInitialData = unknown> {
 
 export interface BaseApp<TInitialData = unknown> {
   id:
-    | "soundboard"
     | "internet-explorer"
     | "chats"
     | "textedit"
@@ -32,9 +31,7 @@ export interface BaseApp<TInitialData = unknown> {
     | "finder"
     | "paint"
     | "videos"
-    | "pc"
     | "photo-booth"
-    | "synth"
     | "ipod"
     | "terminal"
     | "applet-viewer";

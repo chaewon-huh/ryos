@@ -70,11 +70,8 @@ export function Desktop({
     "photo-booth",
     "videos",
     "paint",
-    "soundboard",
     "minesweeper",
-    "synth",
     "terminal",
-    "pc",
   ];
 
   // Get desktop shortcuts - subscribe to store changes
@@ -504,11 +501,8 @@ export function Desktop({
       "photo-booth",
       "videos",
       "paint",
-      "soundboard",
       "minesweeper",
-      "synth",
       "terminal",
-      "pc",
     ];
 
     // Determine which apps should have shortcuts based on theme
@@ -828,11 +822,7 @@ export function Desktop({
               key={app.id}
               name={app.name}
               isDirectory={false}
-              icon={
-                isXpTheme && app.id === "pc"
-                  ? `/icons/${currentTheme}/games.png`
-                  : getAppIconPath(app.id)
-              }
+              icon={getAppIconPath(app.id)}
               onClick={(e) => handleIconClick(app.id, e)}
               onDoubleClick={(e) => {
                 e.stopPropagation();

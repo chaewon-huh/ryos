@@ -1,23 +1,3 @@
-import WaveSurfer from "wavesurfer.js";
-
-export interface SoundSlot {
-  audioData: string | null;
-  waveform?: WaveSurfer;
-  emoji?: string;
-  title?: string;
-}
-
-export interface PlaybackState {
-  isRecording: boolean;
-  isPlaying: boolean;
-}
-
-export interface Soundboard {
-  id: string;
-  name: string;
-  slots: SoundSlot[];
-}
-
 export interface WindowPosition {
   x: number;
   y: number;

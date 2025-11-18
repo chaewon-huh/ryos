@@ -35,7 +35,7 @@ export function extractCodeFromPath(path: string): string | null {
 
 /**
  * Generates a shareable URL for a specific app.
- * @param appId The ID of the app (e.g., 'internet-explorer', 'soundboard').
+ * @param appId The ID of the app (e.g., "internet-explorer", "chats").
  * @returns The full shareable URL (e.g., 'https://hostname.com/internet-explorer').
  */
 export function generateAppShareUrl(appId: string): string {

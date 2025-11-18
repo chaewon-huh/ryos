@@ -1,6 +1,5 @@
 export const appIds = [
   "finder",
-  "soundboard",
   "internet-explorer",
   "chats",
   "textedit",
@@ -9,8 +8,6 @@ export const appIds = [
   "minesweeper",
   "videos",
   "ipod",
-  "synth",
-  "pc",
   "terminal",
   "applet-viewer",
   "control-panels",

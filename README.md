@@ -14,8 +14,6 @@ Works on all devices—including mobile, tablet, and desktop.
 - Menubar with app-specific menus (or taskbar + Start menu on Windows themes)
 - Icon and list views
 - Customizable wallpapers (photos, patterns, or videos)
-- System-wide sampled and synthesizer sound effects
-- System-wide UI, Chats, and Terminal sounds
 - System-wide Ryo AI, with tool calls and context of running applications
 - Virtual file system with local storage persistence and one-click Backup / Restore
 
@@ -50,22 +48,6 @@ Works on all devices—including mobile, tablet, and desktop.
   - Playlist management with shuffle and repeat modes
   - Scrolling titles and classic CD player controls
   - Local storage persistence
-- **Soundboard**: Create and manage custom soundboards
-  - Record sounds directly from microphone
-  - Multiple soundboards support
-  - Waveform visualization
-  - Keyboard shortcuts (1-9)
-  - Import/export functionality
-  - Emoji and title customization
-  - Enhanced synth effects
-- **Synth**: Virtual synthesizer with retro aesthetics
-  - Virtual keyboard with computer key support
-  - Multiple oscillator waveforms (sine, square, sawtooth, triangle)
-  - Effects including reverb, delay, and distortion
-  - Customizable synth parameters
-  - MIDI input support
-  - Preset saving and loading
-  - Classic synthesizer UI design
 - **Photo Booth**: Camera app with effects
   - Take photos with your webcam
   - Multiple photo effects and filters
@@ -97,14 +79,9 @@ Works on all devices—including mobile, tablet, and desktop.
   - Message deletion and moderation capabilities
 - **Control Panels**: System preferences & power tools
   - Appearance & shader selection (CRT, Galaxy, Aurora)
-  - UI / typing / Terminal sound toggles
   - One-click full Backup / Restore
   - Format or reset the virtual file system
 - **Minesweeper**: Classic game implementation
-- **Virtual PC**: DOS game emulator
-  - Play classic games like Doom and SimCity
-  - DOS environment emulation
-  - Game save states
 - **Terminal**: Unix-like CLI with built-in AI
   - Familiar commands (ls, cd, cat, touch, vim, edit, …)
   - ↑ / ↓ history & auto-completion
@@ -172,7 +149,6 @@ project/
 │   ├── share-applet.ts # Applet sharing and storage
 │   ├── chat.ts       # Main AI chat endpoint
 │   ├── chat-rooms.js # Chat room management and real-time messaging
-│   ├── audio-transcribe.ts # Speech-to-text transcription
 │   ├── speech.ts     # Text-to-speech synthesis
 │   ├── lyrics.ts     # Lyric fetching and translation
 │   ├── ie-generate.ts # Internet Explorer AI site generation
@@ -199,7 +175,6 @@ project/
 - **Lucide React** for icons
 - **TipTap** for rich text editing
 - **Three.js** for 3D graphics (Galaxy shader, etc.)
-- **Tone.js** for audio synthesis
 
 ### Storage & Persistence
 - **IndexedDB** for local file system and document storage

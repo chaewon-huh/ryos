@@ -37,7 +37,6 @@ export default defineConfig({
             "@radix-ui/react-dropdown-menu",
             "@radix-ui/react-label",
           ],
-          audio: ["tone", "wavesurfer.js", "audio-buffer-utils"],
         },
       },
     },

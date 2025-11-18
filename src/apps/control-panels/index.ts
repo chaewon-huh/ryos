@@ -11,7 +11,7 @@ export const helpItems = [
   {
     icon: "🔊",
     title: "Sounds",
-    description: "Toggle UI sounds, typing synth, and Terminal / IE effects",
+    description: "Toggle basic UI feedback sounds and notification chimes",
   },
   {
     icon: "🤖",

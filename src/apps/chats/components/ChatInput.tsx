@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowUp, Square, Hand, AtSign } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AudioInputButton } from "@/components/ui/audio-input-button";
 import { useChatSynth } from "@/hooks/useChatSynth";
 import { useAppStoreShallow } from "@/stores/helpers";
 import { useSound, Sounds } from "@/hooks/useSound";
@@ -39,7 +38,6 @@ function AnimatedEllipsis() {
 // Analytics event namespace for chat events
 export const CHAT_ANALYTICS = {
   TEXT_MESSAGE: "chats:text",
-  VOICE_MESSAGE: "chats:voice",
   NUDGE: "chats:nudge",
   STOP_GENERATION: "chats:stop",
 };
@@ -51,7 +49,6 @@ interface ChatInputProps {
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   onStop: () => void;
-  onDirectMessageSubmit?: (message: string) => void;
   onNudge?: () => void;
   previousMessages?: string[];
   /**
@@ -79,7 +76,6 @@ export function ChatInput({
   onInputChange,
   onSubmit,
   onStop,
-  onDirectMessageSubmit,
   onNudge,
   previousMessages = [],
   showNudgeButton = true,
@@ -89,16 +85,10 @@ export function ChatInput({
   needsUsername = false,
 }: ChatInputProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [isTranscribing, setIsTranscribing] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [transcriptionError, setTranscriptionError] = useState<string | null>(
-    null
-  );
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [lastTypingTime, setLastTypingTime] = useState(0);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
-  const audioButtonRef = useRef<HTMLButtonElement>(null);
   const { playNote } = useChatSynth();
   const { play: playNudgeSound } = useSound(Sounds.MSN_NUDGE);
   const { typingSynthEnabled, debugMode, aiModel } = useAppStoreShallow(
@@ -173,49 +163,6 @@ export function ChatInput({
     }
   };
 
-  const handleTranscriptionComplete = (text: string) => {
-    setIsTranscribing(false);
-    setIsRecording(false);
-    setTranscriptionError(null);
-
-    if (!text) {
-      setTranscriptionError("No transcription text received");
-      return;
-    }
-
-    // Track voice message
-    track(CHAT_ANALYTICS.VOICE_MESSAGE);
-
-    // Submit the transcribed text directly if the function is available
-    if (onDirectMessageSubmit) {
-      onDirectMessageSubmit(text.trim());
-    } else {
-      // Fallback to form submission
-      const transcriptionEvent = {
-        target: { value: text.trim() },
-      } as React.ChangeEvent<HTMLInputElement>;
-      onInputChange(transcriptionEvent);
-
-      const submitEvent = new Event(
-        "submit"
-      ) as unknown as React.FormEvent<HTMLFormElement>;
-      onSubmit(submitEvent);
-
-      const clearEvent = {
-        target: { value: "" },
-      } as React.ChangeEvent<HTMLInputElement>;
-      onInputChange(clearEvent);
-    }
-  };
-
-  const handleTranscriptionStart = () => {
-    setIsTranscribing(true);
-  };
-
-  const handleRecordingStateChange = (recording: boolean) => {
-    setIsRecording(recording);
-  };
-
   const handleNudgeClick = () => {
     track(CHAT_ANALYTICS.NUDGE);
     playNudgeSound();
@@ -265,36 +212,6 @@ export function ChatInput({
     }, 0);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        e.code === "Space" &&
-        !e.repeat &&
-        isForeground &&
-        !isFocused &&
-        !isTranscribing
-      ) {
-        e.preventDefault();
-        audioButtonRef.current?.click();
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.code === "Space" && isForeground && !isFocused && isTranscribing) {
-        e.preventDefault();
-        audioButtonRef.current?.click();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, [isForeground, isFocused, isTranscribing]);
-
   return (
     <AnimatePresence initial={false}>
       <motion.div
@@ -328,15 +245,11 @@ export function ChatInput({
                 placeholder={
                   isLoading
                     ? ""
-                    : isRecording
-                    ? "Recording..."
-                    : isTranscribing
-                    ? "Transcribing..."
                     : needsUsername && !isInChatRoom
                     ? "Create account to continue..."
                     : isFocused || isTouchDevice
                     ? "Type a message..."
-                    : "Type or push 'space' to talk..."
+                    : "Type your message..."
                 }
                 className={`w-full border-1 border-gray-800 text-xs font-geneva-12 h-9 ${
                   isMacTheme ? "pl-3 pr-16 rounded-full" : "pl-2 pr-16"
@@ -424,30 +337,6 @@ export function ChatInput({
                     </Tooltip>
                   </TooltipProvider>
                 )}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="relative">
-                        <AudioInputButton
-                          ref={audioButtonRef}
-                          onTranscriptionComplete={handleTranscriptionComplete}
-                          onTranscriptionStart={handleTranscriptionStart}
-                          onRecordingStateChange={handleRecordingStateChange}
-                          isLoading={isTranscribing}
-                          silenceThreshold={1200}
-                          className={`w-[22px] h-[22px] flex items-center justify-center ${
-                            isMacTheme
-                              ? "text-neutral-400 hover:text-neutral-800 transition-colors"
-                              : ""
-                          }`}
-                        />
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Push to Talk</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
               </div>
             </motion.div>
             {isLoading || isSpeechPlaying ? (
@@ -627,20 +516,6 @@ export function ChatInput({
                       : ""
                   }`
                 : `Using ${modelDisplayName}`}
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {transcriptionError && (
-            <motion.div
-              key="transcription-error"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.15 }}
-              className="mt-1 text-red-600 text-xs font-geneva-12"
-            >
-              {transcriptionError}
             </motion.div>
           )}
         </AnimatePresence>
